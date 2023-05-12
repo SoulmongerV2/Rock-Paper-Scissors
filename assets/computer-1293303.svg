@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 4885 3710">
+ <defs>
+  <style type="text/css">
+    .fil0 {fill:black}
+  </style>
+ </defs>
+  <path class="fil0" d="m2403 3710h-1024c0-163 38-317 106-454h-1485v-3256h4885v3256h-1563c68 137 106 291 106 454h-1024zm-2130-3509h4409v2853h-4481v-2853h72zm4265 145h-4192v2564h4192v-2564z"/>
+</svg>
