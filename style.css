@@ -23,23 +23,46 @@ footer{
     flex: 1;
 }
 
-.game-log{
+.game-log, .game-options{
     background-color: aquamarine;
-    width: 300px;
+    width: 15%;
+    max-height: 100%;
+    overflow: auto;
 }
 
 .game-panel{
     background-color: aqua;
     flex: 1;
     display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.button-container{
+
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
 }
 
+.score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.score img{
+    width: 150px;
+}
+
+.score strong{
+    font-size: 128px;
+}
+
 .player-choice{
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     
     /*
     border-radius: 30px;

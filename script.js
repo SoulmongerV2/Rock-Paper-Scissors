@@ -1,32 +1,53 @@
 let roundCount;
-let playerScore;
-let compScore;
-let gameLog = document.querySelector('.game-log');
+
+const comp = {
+    name: "Computer",
+    icon: null,
+    currentScore: 0,
+    gamesWon: 0,
+    gamesLost: 0,
+    currentChoice: null,
+}
+
+const player = {
+    name: "Player",
+    icon: null,
+    currentScore: 0,
+    gamesWon: 0,
+    gamesLost: 0,
+    currentChoice: null,
+}
+
+const gameLog = document.querySelector('.game-log');
+const choiceButtons = document.querySelectorAll('.player-choice');
+const playerScoreDisplay = document.querySelector('#player-score-el');
+const compScoreDisplay = document.querySelector('#comp-score-el');
+
 
 gameInit();
 
-let choiceButtons = document.querySelectorAll('.player-choice');
-choiceButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-        playRound(btn.id);
-    })});
+
+
 
 function gameInit(){
-    roundCount = 0;
-    playerScore = 0;
-    compScore = 0;
+
+    //reset properties
+    comp.currentChoice = null;
+    comp.currentScore = 0;
+    player.currentChoice = null;
+    player.currentScore = 0;
+
+    choiceButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            player.currentChoice = btn.id;
+            playRound();
+        })
+    });
 }
 
-function playRound(playerChoice){
-    /**************************************************
-     *Compares the players' choices and decides a winner. 
-        *Returns an array with a game result on index [0]  and game description on index [1], in reference to player_one
-        *Results:
-        *   player_one won  -  +1
-        *   players tied    -   0
-        *   player_one lost -   1
-    ***************************************************/
-    let compChoice = getComputerChoice();
+function playRound(){
+
+    comp.currentChoice = getComputerChoice();
     let winner = getWinner();
     awardPoints(winner);
     roundCount++;
@@ -40,21 +61,23 @@ function playRound(playerChoice){
     }
 
     function generateLog(){
-        return `Player: ${playerChoice}, CPU: ${compChoice}, Winner: ${winner}`;
+        return `Player: ${player.currentChoice}, CPU: ${comp.currentChoice}, Winner: ${winner}`;
     }
 
     function awardPoints(winner){
         switch(winner){
-            case playerChoice:
-                playerScore++;
+            case "Player":
+                player.currentScore++;
+                console.log(player.currentScore);
+                playerScoreDisplay.textContent = `-${player.currentScore}`;
                 break;
-            case compChoice:
-                compScore++;
+            case "CPU":
+                comp.currentScore++;
+                console.log(comp.currentScore);
+                compScoreDisplay.textContent = `-${comp.currentScore}`;
                 break;
             default:       
         }
-
-        console.log(`player ${playerScore}, comp ${compScore}`);
     }
 
     function getComputerChoice(){
@@ -62,8 +85,8 @@ function playRound(playerChoice){
          * Returns "Rock", "Paper" or "Scissors" randomly
          **************************************************/
     
-        const compChoice = Math.floor(Math.random() * 3 + 1);
-        switch(compChoice){
+        comp.currentChoice = Math.floor(Math.random() * 3 + 1);
+        switch(comp.currentChoice){
             case 1:
                 return "rock";
             case 2:
@@ -75,66 +98,68 @@ function playRound(playerChoice){
     }
 
     function getWinner(){
-        if(playerChoice === compChoice){
+        if(player.currentChoice === comp.currentChoice){
             return "Tie";
         }
     
-        if(playerChoice === "rock"){
-            if(compChoice === "paper"){
+        if(player.currentChoice === "rock"){
+            if(comp.currentChoice === "paper"){
                 return "CPU";
             }
-            if(compChoice === "scissors"){
+            if(comp.currentChoice === "scissors"){
                 return "Player";
             }
         }
     
-        if(playerChoice === "paper"){
-            if(compChoice === "scissors"){
+        if(player.currentChoice === "paper"){
+            if(comp.currentChoice === "scissors"){
                 return "CPU";
             }
-            if(compChoice === "rock"){
+            if(comp.currentChoice === "rock"){
                 return "Player";
             }
         }
     
-        if(playerChoice === "scissors"){
-            if(compChoice === "rock"){
+        if(player.currentChoice === "scissors"){
+            if(comp.currentChoice === "rock"){
                 return "CPU";
             }
-            if(compChoice === "paper"){
+            if(comp.currentChoice === "paper"){
                 return "Player";
             }
         }
+
+        return "duh";
     }
     /*
     function getWinner(){
-        if(playerChoice === compChoice){
+        if(player.currentChoice === comp.currentChoice){
             return [0,"It's a tie."];
         }
     
-        if(playerChoice === "rock"){
-            if(compChoice === "paper"){
+        if(player.currentChoice === "rock"){
+            if(comp.currentChoice === "paper"){
                 return [-1,"You lost. Paper beats Rock."];
             }
-            if(compChoice === "scissors"){
+            if(comp.currentChoice === "scissors"){
                 return [1,"You won. Rock beats Scissors"];
             }
         }
     
-        if(playerChoice === "paper"){
-            if(compChoice === "scissors"){
+        if(player.currentChoice === "paper"){
+            if(comp.currentChoice === "scissors"){
                 return [-1, "You lost. Scissors beat Paper"];
             }
-            if(compChoice === "rock"){
+            if(comp.currentChoice === "rock"){
                 return [1, "You won. Paper beats Rock"];
             }
         }
     
-        if(playerChoice === "scissors"){
-            if(compChoice === "rock"){
+        if(player.currentChoice === "scissors"){
+            if(comp.currentChoice === "rock"){
                 return [-1,"You lost. Rock beats Scissors"];
             }
-            if(compChoice === "paper"){
+            if(comp.currentChoice === "paper"){
                 return [1, "You won. Scissors beat Paper"];
             }
         }
